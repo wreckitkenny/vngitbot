@@ -24,6 +24,9 @@ def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8
     httpd.serve_forever()
 
 if __name__ == "__main__":
+    parser = bc.parser
+    bc.logConfig(parser)
+    
     # Declare Endpoint information
     endpointAddress = bc.parser.get('ENDPOINT', 'ENDPOINT_ADDRESS')
     endpointPort = bc.parser.get('ENDPOINT', 'ENDPOINT_PORT')
