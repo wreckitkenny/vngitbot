@@ -25,8 +25,7 @@ def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8
 
 if __name__ == "__main__":
     bc = BasicConfig()
-    parser = bc.parser
-    bc.logConfig(parser)
+    bc.logConfig()
 
     # Declare Endpoint information
     endpointAddress = bc.parser.get('ENDPOINT', 'ENDPOINT_ADDRESS')
