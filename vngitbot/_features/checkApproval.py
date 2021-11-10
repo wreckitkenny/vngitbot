@@ -3,13 +3,13 @@ import logging, os
 
 class CheckApproval:
     def __init__(self):
+        bc = BasicConfig()
         self.parser = bc.parser
         self.gl = bc.gl
         self.binPath = bc.binPath
         bc.logConfig(self.parser)
 
     def checkApproval(self, mrId, sBranch, username):
-        # if action == 'approved':
         logging.info("A new approval is triggered.")
         cacheExisting = os.path.isfile(self.binPath+'/.cache/'+sBranch)
         if cacheExisting == True: 

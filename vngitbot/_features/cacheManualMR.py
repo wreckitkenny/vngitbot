@@ -2,6 +2,7 @@ from _common import *
 
 class CacheManualMR:
     def __init__(self):
+        bc = BasicConfig()
         self.parser = bc.parser
         self.gl = bc.gl
         self.binPath = bc.binPath

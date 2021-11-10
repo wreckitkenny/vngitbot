@@ -1,8 +1,8 @@
 from .common import *
 from .version import __version__
-from .config import BasicConfig as bc
+from .config import BasicConfig
 
-__all__ = ['bc', 'cacheProject', 'changeContent', 
+__all__ = ['BasicConfig', 'cacheProject', 'changeContent', 
           'changeTag', 'checkEnvironment', 'checkLeftApproval',
           'checkMergeRole', 'checkProjectID', 'downloadOwnerFile',
           'filterEmpty', 'enableProxy', 'getOldTag', 'pullOwners',
