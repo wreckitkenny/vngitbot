@@ -7,7 +7,7 @@ class Handle:
         bc = BasicConfig()
         self.binPath = bc.binPath
         self.parser = bc.parser
-        bc.logConfig(self.parser)
+        bc.logConfig()
 
     def handle(self, post_data, path):
         if path == '/':

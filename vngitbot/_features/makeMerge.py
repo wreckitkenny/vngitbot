@@ -4,10 +4,9 @@ import logging, pickle
 class MakeMerge:
     def __init__(self):
         bc = BasicConfig()
-        self.parser = bc.parser
         self.gl = bc.gl
         self.binPath = bc.binPath
-        bc.logConfig(self.parser)
+        bc.logConfig()
 
     def makeMerge(self, username, sBranch, mrId):
         isEmpty = checkLeftApproval(self.binPath+'/.cache/'+sBranch)

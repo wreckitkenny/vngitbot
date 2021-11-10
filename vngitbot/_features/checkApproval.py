@@ -7,7 +7,7 @@ class CheckApproval:
         self.parser = bc.parser
         self.gl = bc.gl
         self.binPath = bc.binPath
-        bc.logConfig(self.parser)
+        bc.logConfig()
 
     def checkApproval(self, mrId, sBranch, username):
         logging.info("A new approval is triggered.")
