@@ -4,7 +4,7 @@ class BasicConfig:
     def __init__(self):
         self.configPath = os.getenv('GITBOT_CONFIG_PATH')
         # configPath = 'D:\\Code\\7.VNPAY\\CI\\gitbot\\gitbot.conf'
-        self.binPath = '/'.join(self.configPath.split('/')[:-1])
+        self.binPath = '/'.join(self.configPath.split('/')[:-2])
 
         # Config file module
         self.parser = configparser.ConfigParser()
