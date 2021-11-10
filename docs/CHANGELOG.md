@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.4] | 2021-11-10
 ### Added/Removed
+- Added Revoking Approval feature
 ### Changed
 - Changed Application's name
 - Changed application's structure

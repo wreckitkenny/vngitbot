@@ -4,7 +4,7 @@ include:
     file: '/gitlab-ci.gitbot.yaml'
 
 variables:
-  IMAGE_NAME: gitbot
+  IMAGE_NAME: vngitbot
   PROJECT_NAME: library
   LOCAL_REGISTRY: registry.vnpaytest.vn
   REGISTRY_USERNAME: thanhdt
