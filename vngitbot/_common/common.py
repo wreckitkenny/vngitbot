@@ -193,7 +193,21 @@ def pullOwners(binPath, sBranch, cachePath, username, mrId):
         logging.debug("Gitbot is triggering a comment for merging the request {}.".format(mrId))
         with open(cachePath, 'r') as f: merges = yaml.load(f, Loader=yaml.FullLoader)['merge']
         for m in merges: makeComment(binPath, sBranch, mrId, note='Type "merge" to merge. [@{}]'.format(m))
-        
+
+
+def pushOwners(cachePath, username):
+    with open(cachePath, 'r') as f: 
+        owners = yaml.load(f, Loader=yaml.FullLoader)
+        approvals = owners['approve']
+    if username not in approvals:
+        approvals.append(username)
+        owners['approve'] = approvals
+        with open(cachePath, 'w') as f:
+            logging.debug('Gitbot is updating cached MR policy.')
+            yaml.dump(owners, f)
+    else: 
+        logging.debug("User [{}] is existing.".format(username))
+    
 
 def sanitize(binPath, sBranch):
     logging.debug("Gitbot is sanitizing {}".format(binPath+'/.cache/'+sBranch))

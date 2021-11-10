@@ -23,10 +23,16 @@ class Handle:
                 mrId = json.loads(post_data)['object_attributes']['iid']
                 sBranch = json.loads(post_data)['object_attributes']['source_branch']
                 CheckApproval().checkApproval(mrId, sBranch, username)
+
+            if eventType == "merge_request" and json.loads(post_data)['object_attributes']['action'] == 'unapproved':
+                mrId = json.loads(post_data)['object_attributes']['iid']
+                sBranch = json.loads(post_data)['object_attributes']['source_branch']
+                RevokeApproval().revokeApproval(mrId, sBranch, username)
+
             if eventType == "merge_request" and json.loads(post_data)['object_attributes']['action'] == 'open':
                 sBranch = json.loads(post_data)['object_attributes']['source_branch']
                 lastCommit = json.loads(post_data)['object_attributes']['last_commit']['id']
-                userMadeMR = json.loads(post_data)['user']['username']
+                # userMadeMR = json.loads(post_data)['user']['username']
                 projectId = json.loads(post_data)['project']['id']
                 CacheManualMR().cacheManualMR(projectId, lastCommit, sBranch)
 

@@ -6,4 +6,5 @@ __all__ = ['BasicConfig', 'cacheProject', 'changeContent',
           'changeTag', 'checkEnvironment', 'checkLeftApproval',
           'checkMergeRole', 'checkProjectID', 'downloadOwnerFile',
           'filterEmpty', 'enableProxy', 'getOldTag', 'pullOwners',
-          'makeComment', 'sanitize', 'searchFile', '__version__']
+          'makeComment', 'sanitize', 'searchFile', '__version__',
+          'pushOwners']
