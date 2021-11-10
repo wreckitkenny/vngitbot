@@ -24,6 +24,7 @@ def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8
     httpd.serve_forever()
 
 if __name__ == "__main__":
+    bc = BasicConfig()
     parser = bc.parser
     bc.logConfig(parser)
 
