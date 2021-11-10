@@ -14,7 +14,7 @@ class Webhook(BaseHTTPRequestHandler):
         self._set_response()
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
-        Handle.handle(post_data, self.path)
+        Handle().handle(post_data, self.path)
             
 def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8000):
     server_address = (addr, port)
