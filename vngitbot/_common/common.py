@@ -57,7 +57,7 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
         # owners = getApprovers(gl, cdProject, cdFolder)
         downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
         # cacheProject(binPath, cdProject, branchName)
-        botId = gl.users.list(username=botname)[0].id
+        botId = [gl.users.list(username=botname)[0].id]
         logging.info('Gitbot is creating a merge request for new branch [{}]'.format(branchName))
         mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':botId})
         mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": botId})
