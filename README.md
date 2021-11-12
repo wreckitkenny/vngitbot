@@ -10,30 +10,30 @@ VNGitbot is a Python bot supporting SRE to change Image version tag after develo
 |-- Dockerfile
 |-- README.md
 |-- config
-|   -- vngitbot.conf
+|   `-- vngitbot.conf
 |-- docs
-|   -- CHANGELOG.md
+|   `-- CHANGELOG.md
 |-- requirements.txt
-|-- vngitbot
+`-- vngitbot
     |-- _common
     |   |-- __init__.py
     |   |-- common.py
     |   |-- config.py
-    |   -- version.py
+    |   `-- version.py
     |-- _features
     |   |-- __init__.py
     |   |-- cacheManualMR.py
     |   |-- changeImageTag.py
     |   |-- checkApproval.py
     |   |-- makeMerge.py
-    |   -- revokeApproval.py
+    |   `-- revokeApproval.py
     |-- _requests
     |   |-- __init__.py
-    |   -- handle.py
+    |   `-- handle.py
     |-- _slack
     |   |-- __init__.py
-    |   -- slack.py
-    -- launch.py
+    |   `-- slack.py
+    `-- launch.py
 ```
 #
 ## Requirements
