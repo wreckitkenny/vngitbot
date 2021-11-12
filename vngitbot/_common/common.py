@@ -23,7 +23,7 @@ def changeContent(file, old, new):
     with open(file, 'w') as f:
         f.write(content)
 
-def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branchName):
+def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branchName, botname):
     # Check directory existing
     cdFolder = '/'.join(location[0].split('/')[:-1])
     if os.path.isdir(binPath+'/'+cdFolder) == False: os.makedirs(binPath+'/'+cdFolder)
@@ -57,10 +57,10 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
         # owners = getApprovers(gl, cdProject, cdFolder)
         downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
         # cacheProject(binPath, cdProject, branchName)
-        assignees = [4]
+        botId = gl.users.list(username=botname)[0].id
         logging.info('Gitbot is creating a merge request for new branch [{}]'.format(branchName))
-        mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':assignees})
-        mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": assignees})
+        mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':botId})
+        mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": botId})
 
     # Complete
     logging.info('Gitbot has finished changing old tag [{}] to new tag [{}].'.format(oldTag, newTag))
