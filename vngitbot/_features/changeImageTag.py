@@ -17,6 +17,7 @@ class ChangeTag:
         repoName = resource.split(':')[0]
         newTag = resource.split(':')[1]
         cluster = self.parser.get('GENERAL', 'CLUSTER')
+        botname = self.parser.get('GITLAB', 'GITLAB_BOTNAME')
         proxy = self.parser.get('PROXY','ENABLED')
         proxyInfo = self.parser.get('PROXY','PROXY_ADDRESS')
 
@@ -40,7 +41,7 @@ class ChangeTag:
                 logging.info('GitBot is comparing old tag [{}] to new tag [{}].'.format(oldTag, newTag))
                 if (lambda x,y: (x>y)-(x<y))(oldTag,newTag) == 0: logging.info("==> No tag changed!!!")
                 else: 
-                    changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, location, branchName)
+                    changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, location, branchName, botname)
                     notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token=self.parser.get('SLACK', 'SLACK_TOKEN'), 
                                 channel=self.parser.get('SLACK', 'SLACK_CHANNEL'), 
                                 app=self.parser.get('SLACK', 'SLACK_APP'))
