@@ -15,7 +15,7 @@ def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, to
             "fallback": "There is a fallback message.",
             "color": "#36a64f",
             "author_name": "VNPAY-GITBOT",
-            "author_link": "https://github.com/wreckitkenny/gitBot",
+            "author_link": "https://github.com/wreckitkenny/vngitbot",
             "author_icon": "https://avatars.slack-edge.com/2021-11-03/2704701932560_9e73e7a58c9ddea5cbf6_512.png",
             "title": "{}".format(repoName.split("/")[-1]),
             "title_link": "https://registry.vnpaytest.vn",
