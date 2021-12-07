@@ -32,7 +32,6 @@ class Handle:
             if eventType == "merge_request" and json.loads(post_data)['object_attributes']['action'] == 'open':
                 sBranch = json.loads(post_data)['object_attributes']['source_branch']
                 lastCommit = json.loads(post_data)['object_attributes']['last_commit']['id']
-                # userMadeMR = json.loads(post_data)['user']['username']
                 projectId = json.loads(post_data)['project']['id']
                 CacheManualMR().cacheManualMR(projectId, lastCommit, sBranch)
 
@@ -40,3 +39,8 @@ class Handle:
                 sBranch = json.loads(post_data)['merge_request']['source_branch']
                 mrId = json.loads(post_data)['merge_request']['iid']
                 MakeMerge().makeMerge(username, sBranch, mrId)
+
+            if eventType == "merge_request" and json.loads(post_data)['object_attributes']['note'] == 'merge':
+                sBranch = json.loads(post_data)['object_attributes']['source_branch']
+                logging.info("Gitbot is sanitizing caches.")
+                sanitize(self.binPath, sBranch)

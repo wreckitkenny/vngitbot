@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.5] | 2021-12-07
+### Added/Removed
+- Added error log when OWNERS not existing
+- Added disableProxy for Slack after sending notification
+### Changed
+### Fixed
+
 ## [1.0.4] | 2021-11-10
 ### Added/Removed
 - Added Revoking Approval feature
