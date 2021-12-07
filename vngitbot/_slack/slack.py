@@ -1,6 +1,8 @@
 from _common import *
 from slack_sdk import WebClient
 
+from vngitbot._common.common import disableProxy
+
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel, app):
     slack_token = token
     client = WebClient(token=slack_token)
@@ -36,3 +38,5 @@ def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, to
         ],
         user=app
     )
+
+    if proxy == "true": disableProxy(proxyInfo)

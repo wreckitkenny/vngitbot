@@ -7,8 +7,11 @@ import os, logging, re, gitlab, pickle, yaml
 def downloadOwnerFile(binPath, cdFolder, cdProject, branchName):
     logging.debug("Gitbot is caching OWNERS file.")
     if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
-    with open(binPath+'/.cache/'+branchName, 'wb') as f:
-        cdProject.files.raw(file_path=cdFolder+'/OWNERS', ref='master', streamed=True, action=f.write)
+    try:
+        with open(binPath+'/.cache/'+branchName, 'wb') as f:
+            cdProject.files.raw(file_path=cdFolder+'/OWNERS', ref='master', streamed=True, action=f.write)
+    except gitlab.exceptions.GitlabGetError:
+        logging.error("OWNERS file is not found.")
 
 def cacheProject(binPath, cdProject, branchName):
     logging.debug("Gitbot is caching ProjectID object.")
@@ -55,7 +58,7 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
     # Create merge request
     if branchName == newTag:
         # owners = getApprovers(gl, cdProject, cdFolder)
-        downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
+        # downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
         # cacheProject(binPath, cdProject, branchName)
         botId = [gl.users.list(username=botname)[0].id]
         logging.info('Gitbot is creating a merge request for new branch [{}]'.format(branchName))
@@ -120,7 +123,13 @@ def checkProjectID(gl, id):
 #     except gitlab.exceptions.GitlabGetError:
 #         logging.error("OWNERS file is not found.")
 #         return []
-    
+
+def disableProxy(proxy):
+    del os.environ['http_proxy']
+    del os.environ['HTTP_PROXY']
+    del os.environ['https_proxy']
+    del os.environ['HTTPS_PROXY']
+
 def enableProxy(proxy):
     os.environ['http_proxy'] = proxy 
     os.environ['HTTP_PROXY'] = proxy
