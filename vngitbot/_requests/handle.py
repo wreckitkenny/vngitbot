@@ -40,7 +40,7 @@ class Handle:
                 mrId = json.loads(post_data)['merge_request']['iid']
                 MakeMerge().makeMerge(username, sBranch, mrId)
 
-            if eventType == "merge_request" and json.loads(post_data)['object_attributes']['note'] == 'merge':
+            if eventType == "merge_request" and json.loads(post_data)['object_attributes']['action'] == 'merge':
                 sBranch = json.loads(post_data)['object_attributes']['source_branch']
                 logging.info("Gitbot is sanitizing caches.")
                 sanitize(self.binPath, sBranch)
