@@ -150,7 +150,7 @@ def getOldTag(cdProject, repoName):
                             i = re.sub(r'[\n\t ]', '', i)
                             #Oldest i = re.search('(?<=:)(v)?(((\d(\.\d)+)-)?([a-z0-9]+)|[a-z]-)?([a-z0-9]+)',re.sub(r'[\n\t ]', '', i))
                             #Older i = re.search('(?<=:)(v)?(((\d(\.\d)+)-)|[a-z]-)?([a-z0-9]+)',re.sub(r'[\n\t ]', '', i))
-                            i = re.search('(?<=:)(m-)?(v)?((\d\.){2}\d-|[a-z]-)?([a-z0-9]+)',re.sub(r'[\n\t ]', '', i))
+                            i = re.search('(?<=:)(m-)?(v)?((\d\.){2}\d+-|[a-z]-)?([a-z0-9]+)',re.sub(r'[\n\t ]', '', i))
                             return i.group(0)
         logging.error("Repository [{}] is not found.".format(repoName))
         return ''

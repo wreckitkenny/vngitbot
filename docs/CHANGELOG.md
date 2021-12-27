@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.6] | 2021-12-27
+### Added/Removed
+### Changed
+### Fixed
+- Fixed getting wrong OldTag
+
 ## [1.0.5] | 2021-12-07
 ### Added/Removed
 - Added error log when OWNERS not existing
