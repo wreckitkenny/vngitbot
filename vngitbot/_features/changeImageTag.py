@@ -1,5 +1,5 @@
 from _common import *
-from _slack import *
+from _telegram import *
 import logging
 
 class ChangeTag:

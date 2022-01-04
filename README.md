@@ -33,6 +33,9 @@ VNGitbot is a Python bot supporting SRE to change Image version tag after develo
     |-- _slack
     |   |-- __init__.py
     |   `-- slack.py
+    |-- _telegram
+    |   |-- __init__.py
+    |   `-- telegram.py
     `-- launch.py
 ```
 #
