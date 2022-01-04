@@ -4,7 +4,7 @@ from slack_sdk import WebClient
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel, app):
     slack_token = token
     client = WebClient(token=slack_token)
-    
+
     # Check Proxy enabled
     if proxy == "true": enableProxy(proxyInfo)
 
