@@ -5,7 +5,7 @@ def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, to
     # Check Proxy enabled
     if proxy == "true": enableProxy(proxyInfo)
 
-    bot_token = token #'5065696022:AAFpm7xIZAuxFZDqVEBGU3a6wGOtxLsUY1w'
+    bot_token = token 
     bot_chatID = '@' + channel #'@vngitbotchannel'
     bot_message = """
 <b>Service</b>: {}
