@@ -9,7 +9,7 @@ class ChangeTag:
         self.gl = bc.gl
         self.binPath = bc.binPath
         bc.logConfig()
-        
+
     def changeImageTag(self, resource):
         # Variables definition
         global workPath, cdProject
@@ -29,7 +29,7 @@ class ChangeTag:
             branch_list = [branch.name for branch in cdProject.branches.list()]
 
             if env == 'prod':
-                if newTag in branch_list: 
+                if newTag in branch_list:
                     logging.warning('Branch [{}] is existing.'.format(newTag))
                     cdProject.branches.delete(newTag)
                     logging.info('Gitbot has removed old [{}] branch'.format(newTag))
@@ -40,9 +40,12 @@ class ChangeTag:
             if oldTag != '':
                 logging.info('GitBot is comparing old tag [{}] to new tag [{}].'.format(oldTag, newTag))
                 if (lambda x,y: (x>y)-(x<y))(oldTag,newTag) == 0: logging.info("==> No tag changed!!!")
-                else: 
+                else:
                     changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, location, branchName, botname)
-                    notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token=self.parser.get('SLACK', 'SLACK_TOKEN'), 
-                                channel=self.parser.get('SLACK', 'SLACK_CHANNEL'), 
-                                app=self.parser.get('SLACK', 'SLACK_APP'))
+                    # notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token=self.parser.get('SLACK', 'SLACK_TOKEN'),
+                    #             channel=self.parser.get('SLACK', 'SLACK_CHANNEL'),
+                    #             app=self.parser.get('SLACK', 'SLACK_APP'))
+                    notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo,
+                                    token=self.parser.get('TELEGRAM', 'TELEGRAM_TOKEN'),
+                                    channel=self.parser.get('TELEGRAM', 'TELEGRAM_CHANNEL'))
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))

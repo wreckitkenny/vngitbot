@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.7] | 2022-01-05
+### Added/Removed
+- Added to use Telegram as notification instead of Slack
+### Changed
+### Fixed
+
 ## [1.0.6] | 2021-12-27
 ### Added/Removed
 ### Changed
