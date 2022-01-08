@@ -1,5 +1,5 @@
 import os, logging, re, gitlab
-from merge import downloadOwnerFile, cacheProject
+from .merge import downloadOwnerFile, cacheProject
 
 def checkEnvironment(gl, parser, pushedTag):
     env = cdProject = ''
