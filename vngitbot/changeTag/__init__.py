@@ -1,3 +1,3 @@
-from . import ChangeTag
+from changeImageTag import ChangeTag
 
 __all__ = ['ChangeTag']
