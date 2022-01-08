@@ -1,4 +1,4 @@
-from vngitbot.utils import *
+from utils import *
 import logging, pickle
 
 class MakeMerge:
