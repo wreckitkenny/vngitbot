@@ -1,5 +1,5 @@
 from utils import BasicConfig, sanitize
-from handleRequest import ChangeTag
+from changeTag import ChangeTag
 from approve import CheckApproval, RevokeApproval
 from merge import MakeMerge, CacheManualMR
 import json, logging
