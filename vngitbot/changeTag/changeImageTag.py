@@ -29,7 +29,7 @@ class ChangeTag:
             branch_list = [branch.name for branch in cdProject.branches.list()]
             if len(branch_list) > 3:
                 print(branch_list)
-                cdProject.branches.delete(branch_list[-2])
+                cdProject.branches.delete(branch_list[0])
 
             if env == 'prod':
                 if newTag in branch_list:
