@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from requests import *
-from utils import *
+from utils import BasicConfig
 from handleRequest import Handle
 import logging
 
