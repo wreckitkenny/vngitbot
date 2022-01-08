@@ -1,4 +1,4 @@
-from utils import *
+from utils import BasicConfig, pushOwners
 import logging, os
 
 class RevokeApproval:

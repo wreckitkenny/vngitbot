@@ -1,4 +1,4 @@
-from vngitbot.utils import *
+from utils import enableProxy, disableProxy
 import requests
 
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel):

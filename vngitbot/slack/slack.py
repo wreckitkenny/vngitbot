@@ -1,4 +1,4 @@
-from utils import *
+from utils import enableProxy, disableProxy
 from slack_sdk import WebClient
 
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel, app):

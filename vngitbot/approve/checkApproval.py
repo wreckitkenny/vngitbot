@@ -1,4 +1,4 @@
-from utils import *
+from utils import BasicConfig, pullOwners
 import logging, os
 
 class CheckApproval:

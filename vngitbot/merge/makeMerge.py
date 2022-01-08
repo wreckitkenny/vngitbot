@@ -1,4 +1,4 @@
-from utils import *
+from utils import BasicConfig, checkLeftApproval, checkMergeRole, makeComment, sanitize
 import logging, pickle
 
 class MakeMerge:

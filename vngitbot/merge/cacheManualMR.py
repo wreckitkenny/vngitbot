@@ -1,4 +1,4 @@
-from utils import *
+from utils import BasicConfig, downloadOwnerFile, cacheProject
 
 class CacheManualMR:
     def __init__(self):
