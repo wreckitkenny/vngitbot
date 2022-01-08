@@ -1,4 +1,4 @@
-from _common import *
+from vngitbot.utils import *
 import logging, pickle
 
 class MakeMerge:
@@ -11,10 +11,10 @@ class MakeMerge:
     def makeMerge(self, username, sBranch, mrId):
         isEmpty = checkLeftApproval(self.binPath+'/.cache/'+sBranch)
         allowToMerge = checkMergeRole(self.binPath+'/.cache/'+sBranch, username)
-        if allowToMerge != True: 
+        if allowToMerge != True:
             logging.info('User [{}] is not authorized to merge the request.'.format(username))
             makeComment(self.binPath, sBranch, mrId, note='[__Warning__] User [@{}] is not authorized to merge the request.'.format(username))
-        if allowToMerge == True and isEmpty != True: 
+        if allowToMerge == True and isEmpty != True:
             logging.info('There is not enough approval to merge.')
             makeComment(self.binPath, sBranch, mrId, note='[__Warning__] There is not enough approval to merge.')
         if allowToMerge == True and isEmpty == True:

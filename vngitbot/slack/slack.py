@@ -1,4 +1,4 @@
-from _common import *
+from utils import *
 from slack_sdk import WebClient
 
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel, app):

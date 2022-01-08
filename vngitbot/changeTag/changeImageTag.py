@@ -1,5 +1,5 @@
-from _common import *
-from _telegram import *
+from utils import *
+from telegram import notifyTagChange
 import logging
 
 class ChangeTag:

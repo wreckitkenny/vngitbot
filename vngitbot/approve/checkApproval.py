@@ -1,4 +1,4 @@
-from _common import *
+from utils import *
 import logging, os
 
 class CheckApproval:
@@ -12,7 +12,7 @@ class CheckApproval:
     def checkApproval(self, mrId, sBranch, username):
         logging.info("A new approval is triggered.")
         cacheExisting = os.path.isfile(self.binPath+'/.cache/'+sBranch)
-        if cacheExisting == True: 
+        if cacheExisting == True:
             logging.info("Gitbot is checking if username [{}] is authorized to approve.".format(username))
             pullOwners(self.binPath, sBranch, self.binPath+'/.cache/'+sBranch, username, mrId)
         else: logging.error("Cached file {} is not existing.".format(self.binPath+'/.cache/'+sBranch))

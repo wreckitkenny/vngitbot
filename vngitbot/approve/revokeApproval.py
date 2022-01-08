@@ -1,4 +1,4 @@
-from _common import *
+from utils import *
 import logging, os
 
 class RevokeApproval:

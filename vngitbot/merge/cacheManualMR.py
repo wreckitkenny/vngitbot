@@ -1,4 +1,4 @@
-from _common import *
+from utils import *
 
 class CacheManualMR:
     def __init__(self):

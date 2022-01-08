@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from _requests import *
-from _common import *
+from requests import *
+from utils import *
+from handleRequest import Handle
 import logging
 
 
@@ -10,18 +11,21 @@ class Webhook(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.end_headers()
 
+
     def do_POST(self):
         self._set_response()
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         Handle().handle(post_data, self.path)
-            
+
+
 def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8000):
     server_address = (addr, port)
     httpd = server_class(server_address, handler_class)
     logging.info("="*100)
     logging.info("Gitbot {} has started on {}:{}".format(__version__, addr, port))
     httpd.serve_forever()
+
 
 if __name__ == "__main__":
     bc = BasicConfig()

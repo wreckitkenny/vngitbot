@@ -1,11 +1,11 @@
-from _common import *
+from vngitbot.utils import *
 import requests
 
 def notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token, channel):
     # Check Proxy enabled
     if proxy == "true": enableProxy(proxyInfo)
 
-    bot_token = token 
+    bot_token = token
     bot_chatID = '@' + channel #'@vngitbotchannel'
     bot_message = """
 <b>Service</b>: {}

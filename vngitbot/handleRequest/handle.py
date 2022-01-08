@@ -1,5 +1,7 @@
-from _common import *
-from _features import *
+from utils import *
+from changeTag import ChangeTag
+from approve import CheckApproval, RevokeApproval
+from merge import MakeMerge, CacheManualMR
 import json, logging
 
 class Handle:
@@ -13,7 +15,7 @@ class Handle:
         if path == '/':
                 eventType = json.loads(post_data)['type']
                 resource = json.loads(post_data)['event_data']['resources'][0]['resource_url']
-                if eventType == "PUSH_ARTIFACT":  
+                if eventType == "PUSH_ARTIFACT":
                     logging.info("-"*100)
                     ChangeTag().changeImageTag(resource)
         if path == '/merge':
