@@ -1,5 +1,5 @@
 import logging, yaml
-from merge import makeComment, checkLeftApproval
+from . import makeComment, checkLeftApproval
 
 
 def pullOwners(binPath, sBranch, cachePath, username, mrId):
