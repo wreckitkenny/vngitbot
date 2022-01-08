@@ -1,6 +1,5 @@
 import os, logging, re, gitlab
-from utils import *
-
+from utils import downloadOwnerFile, cacheProject
 
 def checkEnvironment(gl, parser, pushedTag):
     env = cdProject = ''
