@@ -6,7 +6,7 @@ VNGitbot is a Python bot supporting SRE to change Image version tag after develo
 
 #
 ```bash
-.
+vngitbot/
 |-- Dockerfile
 |-- README.md
 |-- config
@@ -15,28 +15,37 @@ VNGitbot is a Python bot supporting SRE to change Image version tag after develo
 |   `-- CHANGELOG.md
 |-- requirements.txt
 `-- vngitbot
-    |-- _common
+    |-- approve
     |   |-- __init__.py
-    |   |-- common.py
-    |   |-- config.py
-    |   `-- version.py
-    |-- _features
-    |   |-- __init__.py
-    |   |-- cacheManualMR.py
-    |   |-- changeImageTag.py
     |   |-- checkApproval.py
-    |   |-- makeMerge.py
     |   `-- revokeApproval.py
-    |-- _requests
+    |-- changeTag
+    |   |-- __init__.py
+    |   `-- changeImageTag.py
+    |-- common
+    |   `-- common.py
+    |-- handleRequest
     |   |-- __init__.py
     |   `-- handle.py
-    |-- _slack
+    |-- launch.py
+    |-- merge
+    |   |-- __init__.py
+    |   |-- cacheManualMR.py
+    |   `-- makeMerge.py
+    |-- slack
     |   |-- __init__.py
     |   `-- slack.py
-    |-- _telegram
+    |-- telegram
     |   |-- __init__.py
     |   `-- telegram.py
-    `-- launch.py
+    `-- utils
+        |-- __init__.py
+        |-- approve.py
+        |-- change.py
+        |-- config.py
+        |-- merge.py
+        |-- notify.py
+        `-- version.py
 ```
 #
 ## Requirements
