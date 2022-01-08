@@ -1,4 +1,4 @@
-from utils import *
+from utils import BasicConfig, sanitize
 from changeTag import ChangeTag
 from approve import CheckApproval, RevokeApproval
 from merge import MakeMerge, CacheManualMR
