@@ -27,7 +27,7 @@ class ChangeTag:
             oldTag = getOldTag(cdProject, repoName)
             location = searchFile(cdProject, repoName)
             branch_list = [branch.name for branch in cdProject.branches.list()]
-            if len(branch_list) > 3: branch_list.pop(-1)
+            if len(branch_list) > 3:  branch_list = branch_list.pop(-1)
 
             if env == 'prod':
                 if newTag in branch_list:
