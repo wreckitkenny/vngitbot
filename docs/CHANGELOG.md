@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.0] | 2022-01-09
+### Added/Removed
+- Added new feature that notifies Success Deployment after changing version tag
+- Addedd caching Image information for deployment
+### Changed
+- Changed structure of source code
+- Changed to keep only three versions of commit when creating MR for production environment
+### Fixed
+
 ## [1.0.7] | 2022-01-05
 ### Added/Removed
 - Added to use Telegram as notification instead of Slack
