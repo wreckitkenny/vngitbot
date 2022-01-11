@@ -1,5 +1,5 @@
 from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag
-from telegram import notifyTagChange
+from telegram import Telegram
 import logging
 
 class ChangeTag:
@@ -18,8 +18,6 @@ class ChangeTag:
         newTag = resource.split(':')[1]
         cluster = self.parser.get('GENERAL', 'CLUSTER')
         botname = self.parser.get('GITLAB', 'GITLAB_BOTNAME')
-        proxy = self.parser.get('PROXY','ENABLED')
-        proxyInfo = self.parser.get('PROXY','PROXY_ADDRESS')
 
         logging.info("Gitbot is proceeding new image [{}]".format(resource))
         env, cdProject = checkEnvironment(self.gl, self.parser, newTag)
@@ -46,7 +44,5 @@ class ChangeTag:
                     # notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token=self.parser.get('SLACK', 'SLACK_TOKEN'),
                     #             channel=self.parser.get('SLACK', 'SLACK_CHANNEL'),
                     #             app=self.parser.get('SLACK', 'SLACK_APP'))
-                    notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo,
-                                    token=self.parser.get('TELEGRAM', 'TELEGRAM_TOKEN'),
-                                    channel=self.parser.get('TELEGRAM', 'TELEGRAM_CHANNEL'))
+                    Telegram.notifyTagChange(oldTag, newTag, cluster, env, repoName)
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))

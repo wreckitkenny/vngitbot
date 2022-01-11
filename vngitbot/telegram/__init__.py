@@ -1,3 +1,3 @@
-from .telegram import notifyTagChange
+from .telegram import Telegram
 
-__all__ = ['notifyTagChange']
+__all__ = ['Telegram']

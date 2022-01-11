@@ -91,6 +91,9 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
         mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':botId})
         mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": botId})
 
+    # Cache image for deployment
+    cacheImage(binPath, resource, mode='a')
+
     # Complete
     logging.info('Gitbot has finished changing old tag [{}] to new tag [{}].'.format(oldTag, newTag))
 
@@ -111,6 +114,14 @@ def checkProjectID(gl, id):
         return 0
     return 1
 
+def cacheImage (binPath, imageName, mode):
+    if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
+    with open(binPath+'/.cache/imageNotDeployed', mode) as f:
+        f.seek(0)
+        data = f.read(100)
+        if len(data) > 0 :
+            f.write("\n")
+        f.write(imageName+',0,0')
 
 # def cacheOwner(binPath, owners, branchName):
 #     if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
