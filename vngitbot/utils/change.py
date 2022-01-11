@@ -92,7 +92,7 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
         mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": botId})
 
     # Cache image for deployment
-    cacheImage(binPath, resource, mode='a')
+    cacheImage(binPath, resource, mode='a+')
 
     # Complete
     logging.info('Gitbot has finished changing old tag [{}] to new tag [{}].'.format(oldTag, newTag))

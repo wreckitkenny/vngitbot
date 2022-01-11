@@ -18,13 +18,13 @@ class Telegram:
     <b>Service</b>: {}
     <b>Cluster</b>: {}-{}-workload
     <b>Old tag</b>: {}  ==>  <b>New tag</b>: {}
-    """.format(repoName.split("/")[-1], cluster, env, oldTag, newTag,)
+    """.format(repoName.split("/")[-1], cluster, env, oldTag, newTag)
         send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
         response = requests.get(send_text)
         if self.proxy == "true": disableProxy(self.proxyInfo)
 
 
-    def notifySuccess(self, imageName,):
+    def notifySuccess(self, imageName):
         # Check Proxy enabled
         if self.proxy == "true": enableProxy(self.proxyInfo)
         bot_message = """
