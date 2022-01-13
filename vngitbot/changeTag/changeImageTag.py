@@ -44,5 +44,5 @@ class ChangeTag:
                     # notifyTagChange(oldTag, newTag, cluster, env, repoName, proxy, proxyInfo, token=self.parser.get('SLACK', 'SLACK_TOKEN'),
                     #             channel=self.parser.get('SLACK', 'SLACK_CHANNEL'),
                     #             app=self.parser.get('SLACK', 'SLACK_APP'))
-                    Telegram.notifyTagChange(oldTag, newTag, cluster, env, repoName)
+                    Telegram().notifyTagChange(oldTag, newTag, cluster, env, repoName)
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))
