@@ -2,6 +2,7 @@ from utils import BasicConfig, sanitize
 from changeTag import ChangeTag
 from approve import CheckApproval, RevokeApproval
 from merge import MakeMerge, CacheManualMR
+from verify import CheckDeploy
 import json, logging
 
 class Handle:
@@ -46,3 +47,8 @@ class Handle:
                 sBranch = json.loads(post_data)['object_attributes']['source_branch']
                 logging.info("Gitbot is sanitizing caches.")
                 sanitize(self.binPath, sBranch)
+        if path == '/verify':
+            kind = json.loads(post_data)['object_kind']
+            status = json.loads(post_data)['object_attributes']['status']
+            if kind == "pipeline" and status == "success":
+                CheckDeploy().checkDeploy()

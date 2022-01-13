@@ -6,7 +6,8 @@ def readCache(imageName):
     listCache = []
     with open(imageName, 'r') as f:
         lines = f.read().splitlines()
-        for l in lines: listCache.append(l.split(','))
+        # for l in lines: listCache.append(l.split(','))
+        for l in lines: listCache.append(l)
     return listCache
 
 
@@ -26,7 +27,7 @@ def verifySuccess(pod, kubeconfig):
     ret = v1.list_pod_for_all_namespaces(watch=False)
     check = 0
     while check < 3:
-        if pod.spec.container_statuses[0].state.running != None: return True
+        if pod.status.container_statuses[0].state.running != None: return True
         time.sleep(3)
         check += 1
     if check == 3: return False

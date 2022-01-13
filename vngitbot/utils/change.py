@@ -121,7 +121,8 @@ def cacheImage (binPath, imageName, mode):
         data = f.read(100)
         if len(data) > 0 :
             f.write("\n")
-        f.write(imageName+',0,0')
+        # f.write(imageName+',0,0')
+        f.write(imageName)
 
 # def cacheOwner(binPath, owners, branchName):
 #     if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
