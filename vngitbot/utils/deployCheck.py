@@ -1,6 +1,6 @@
-from multiprocessing import context
 from kubernetes import client, config
 from utils import BasicConfig, cacheImage
+from datetime import timezone, timedelta
 import time, os
 
 def readCache(imageName):
@@ -20,7 +20,7 @@ def getContext(imageName):
 
 
 def isDeployed(imageName, kubeconfig):
-    context=getContext(imageName)
+    context = getContext(imageName)
     config.load_kube_config(config_file=kubeconfig, context=context)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
@@ -30,11 +30,12 @@ def isDeployed(imageName, kubeconfig):
     return(False, None)
 
 
-def verifySuccess(pod, kubeconfig):
-    config.load_kube_config(config_file=kubeconfig)
+def verifySuccess(imageName, pod, kubeconfig):
+    context = getContext(imageName)
+    config.load_kube_config(config_file=kubeconfig, context=context)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
-    startedTime = pod.status.container_statuses[0].state.running
+    startedTime = pod.status.container_statuses[0].state.running.started_at.replace(tzinfo=timezone(timedelta(hours=-7))).astimezone(timezone.utc).strftime('%Y/%m/%d %H:%M:%S')
     check = 0
     while check < 3:
         if pod.status.container_statuses[0].state.running != None: return(True, startedTime)
@@ -46,8 +47,7 @@ def verifySuccess(pod, kubeconfig):
 def removeCachedImage(binPath, cachedImage, listCache):
     newList = listCache
     newList.remove(cachedImage)
-    if len(newList) == 0: os.remove('./imageNotDeployed')
+    if len(newList) == 0: os.remove(binPath+'/.cache/imageNotDeployed')
     for i in range(len(newList)):
         if i == 0: cacheImage(binPath, newList[i], mode='w+')
         else: cacheImage(binPath, newList[i], mode='a+')
-

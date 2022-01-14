@@ -15,9 +15,9 @@ class Telegram:
         if self.proxy == "true": enableProxy(self.proxyInfo)
         bot_message = """
 <b>VNGITBOT has changed version tag for deployment.</b>
-<b>Service</b>: {}
-<b>Cluster</b>: {}-{}-workload
-<b>Old tag</b>: {}  ==>  <b>New tag</b>: {}
+<b>Service</b>: <code>{}</code>
+<b>Cluster</b>: <code>{}-{}-workload</code>
+<b>Old tag</b>: <code>{}</code>  ==>  <b>New tag</b>: <code>{}</code>
 """.format(repoName.split("/")[-1], cluster, env, oldTag, newTag)
         send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
         response = requests.get(send_text)
@@ -28,7 +28,7 @@ class Telegram:
         # Check Proxy enabled
         if self.proxy == "true": enableProxy(self.proxyInfo)
         bot_message = """
-    <b>Service [{}] with new version [{}] has been successfully deployed at [{}].</b>
+    <b>Service [<code>{}</code>] with new version [<code>{}</code>] has been successfully deployed at [<code>{}</code>].</b>
     """.format(imageName.split(':')[0].split('/')[-1], imageName.split(':')[-1], startedTime)
         send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
         response = requests.get(send_text)
