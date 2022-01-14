@@ -1,5 +1,6 @@
+from multiprocessing import context
 from kubernetes import client, config
-from utils import cacheImage
+from utils import BasicConfig, cacheImage
 import time, os
 
 def readCache(imageName):
@@ -11,13 +12,21 @@ def readCache(imageName):
     return listCache
 
 
-def isDeployed(image, kubeconfig):
-    config.load_kube_config(config_file=kubeconfig)
+def getContext(imageName):
+    parser = BasicConfig().parser
+    tag = imageName.split(':')[-1]
+    if tag.startswith('m'): return parser.get('K8S', 'PROD_CONTEXT_NAME')
+    if tag.startswith('t'): return parser.get('K8S', 'STAGING_CONTEXT_NAME')
+
+
+def isDeployed(imageName, kubeconfig):
+    context=getContext(imageName)
+    config.load_kube_config(config_file=kubeconfig, context=context)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
     # startedTime = p.status.container_statuses[0].state.running
     for p in ret.items:
-        if image in p.spec.containers[0].image: return(True, p)
+        if imageName in p.spec.containers[0].image: return(True, p)
     return(False, None)
 
 
@@ -25,9 +34,10 @@ def verifySuccess(pod, kubeconfig):
     config.load_kube_config(config_file=kubeconfig)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
+    startedTime = pod.status.container_statuses[0].state.running
     check = 0
     while check < 3:
-        if pod.status.container_statuses[0].state.running != None: return True
+        if pod.status.container_statuses[0].state.running != None: return(True, startedTime)
         time.sleep(3)
         check += 1
     if check == 3: return False
@@ -36,7 +46,8 @@ def verifySuccess(pod, kubeconfig):
 def removeCachedImage(binPath, cachedImage, listCache):
     newList = listCache
     newList.remove(cachedImage)
+    if len(newList) == 0: os.remove('./imageNotDeployed')
     for i in range(len(newList)):
-        if i == 0: cachedImage(binPath, newList[i][0], mode='w')
-        else: cachedImage(binPath, newList[i][0], mode='a')
+        if i == 0: cacheImage(binPath, newList[i], mode='w+')
+        else: cacheImage(binPath, newList[i], mode='a+')
 

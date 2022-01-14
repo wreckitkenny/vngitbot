@@ -15,7 +15,8 @@ class CheckDeploy:
         isSucceeded = False
         for cachedImage in listCache:
             isDeployedOnK8s, _pod = isDeployed(cachedImage, self.kubeconfig)
-            if isDeployedOnK8s == True: isSucceeded = verifySuccess(_pod, self.kubeconfig)
+            if isDeployedOnK8s == True:
+                isSucceeded, startedTime = verifySuccess(_pod, self.kubeconfig)
             if isSucceeded == True:
-                Telegram().notifySuccess(cachedImage)
+                Telegram().notifySuccess(cachedImage, startedTime)
                 removeCachedImage(self.binPath, cachedImage, listCache)
