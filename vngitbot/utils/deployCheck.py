@@ -24,7 +24,6 @@ def isDeployed(imageName, kubeconfig):
     config.load_kube_config(config_file=kubeconfig, context=context)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
-    # startedTime = p.status.container_statuses[0].state.running
     for p in ret.items:
         if imageName in p.spec.containers[0].image: return(True, p)
     return(False, None)
@@ -35,13 +34,17 @@ def verifySuccess(imageName, pod, kubeconfig):
     config.load_kube_config(config_file=kubeconfig, context=context)
     v1 = client.CoreV1Api()
     ret = v1.list_pod_for_all_namespaces(watch=False)
-    startedTime = pod.status.container_statuses[0].state.running.started_at.replace(tzinfo=timezone(timedelta(hours=-7))).astimezone(timezone.utc).strftime('%Y/%m/%d %H:%M:%S')
     check = 0
     while check < 3:
-        if pod.status.container_statuses[0].state.running != None: return(True, startedTime)
+        if pod.status.container_statuses[0].state.running != None:
+            startedTime = pod.status.container_statuses[0].state.running.started_at.replace(tzinfo=timezone(timedelta(hours=-7))).astimezone(timezone.utc).strftime('%Y/%m/%d %H:%M:%S')
+            return(True, startedTime)
         time.sleep(3)
         check += 1
-    if check == 3: return False
+    if check == 3:
+        # reason = pod.status.container_statuses[0].state.waiting.reason
+        # message = pod.status.container_statuses[0].state.waiting.message
+        return(False, None)
 
 
 def removeCachedImage(binPath, cachedImage, listCache):

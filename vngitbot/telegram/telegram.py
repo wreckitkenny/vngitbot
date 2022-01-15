@@ -28,8 +28,33 @@ class Telegram:
         # Check Proxy enabled
         if self.proxy == "true": enableProxy(self.proxyInfo)
         bot_message = """
-    <b>Service [<code>{}</code>] with new version [<code>{}</code>] has been successfully deployed at [<code>{}</code>].</b>
+<b>Service [<code>{}</code>] with new version [<code>{}</code>] has been successfully deployed at [<code>{}</code>].</b>
     """.format(imageName.split(':')[0].split('/')[-1], imageName.split(':')[-1], startedTime)
+        send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
+        response = requests.get(send_text)
+        # return response.json()
+        if self.proxy == "true": disableProxy(self.proxyInfo)
+
+
+#     def notifyFailure(self, imageName, reason):
+#         # Check Proxy enabled
+#         if self.proxy == "true": enableProxy(self.proxyInfo)
+#         bot_message = """
+# <b>Service [<code>{}</code>] with new version [<code>{}</code>] has failed to deploy.</b>
+# <b>Reason</b>: <code>{}</code>
+# <b>Message</b>: <code>{}</code>
+#     """.format(imageName.split(':')[0].split('/')[-1], imageName.split(':')[-1], reason.split(':')[0], reason.split(':')[1])
+#         send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
+#         response = requests.get(send_text)
+#         # return response.json()
+#         if self.proxy == "true": disableProxy(self.proxyInfo)
+
+    def notifyFailure(self, imageName):
+        # Check Proxy enabled
+        if self.proxy == "true": enableProxy(self.proxyInfo)
+        bot_message = """
+<b>Service [<code>{}</code>] with new version [<code>{}</code>] has failed to deploy.</b>
+    """.format(imageName.split(':')[0].split('/')[-1], imageName.split(':')[-1])
         send_text = 'https://api.telegram.org/bot' + self.token + '/sendMessage?chat_id=@' + self.channel + '&parse_mode=HTML&text=' + bot_message
         response = requests.get(send_text)
         # return response.json()
