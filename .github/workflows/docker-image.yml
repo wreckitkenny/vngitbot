@@ -9,18 +9,22 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  GITHUB_REPOSITORY: "vngitbot"
-  VERSION: "1.0.0"
+  HUB_NAMESPACE: "wikyhub"
+  HUB_REPOSITORY: "vngitbot"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Export VERSION to env
+      run: export VERSION=`cat VERSION`
     - name: Login to docker hub
       uses: actions-hub/docker/login@master
     - name: Build Docker image - ${VERSION}
       run: docker build -t ${GITHUB_REPOSITORY}:${VERSION} .
+    - name: Tag new Docker image
+      run: docker tag wreckitkenny/${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
     - name: Push to Docker hub
       uses: actions-hub/docker@master
       with:
