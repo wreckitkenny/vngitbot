@@ -24,7 +24,7 @@ jobs:
     - name: Build Docker image - ${VERSION}
       run: docker build -t ${GITHUB_REPOSITORY}:${VERSION} .
     - name: Tag new Docker image
-      run: docker tag wreckitkenny/${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
+      run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
     - name: Push to Docker hub
       uses: actions-hub/docker@master
       with:
