@@ -11,7 +11,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   HUB_NAMESPACE: "wikyhub"
   HUB_REPOSITORY: "vngitbot"
-  VERSION: $(cat VERSION)
+  VERSION: "1.0.0"
 
 jobs:
   build:
@@ -27,4 +27,4 @@ jobs:
     - name: Push to Docker hub
       uses: actions-hub/docker@master
       with:
-        args: push ${GITHUB_REPOSITORY}:${VERSION}
+        args: push ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
