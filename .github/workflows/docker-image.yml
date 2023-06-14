@@ -17,6 +17,7 @@ jobs:
   getVersion:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Get version
         id: app-version
         run: echo VERSION=$(cat VERSION) >> "$GITHUB_OUTPUT"
