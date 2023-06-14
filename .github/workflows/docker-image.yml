@@ -22,9 +22,9 @@ jobs:
       id: app-version
       run: echo VERSION=$(cat VERSION) >> "$GITHUB_OUTPUT"
     - name: Build Docker image
-      run: docker build -t ${GITHUB_REPOSITORY}:${steps.app-version.outputs.VERSION} .
+      run: docker build -t ${GITHUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}} .
     - name: Tag new Docker image
-      run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${steps.app-version.outputs.VERSION}
+      run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}}
     
   publish:
     runs-on: ubuntu-latest
@@ -34,6 +34,6 @@ jobs:
       - name: Push to Docker hub
         uses: actions-hub/docker@master
         with:
-          args: push ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${steps.app-version.outputs.VERSION}
+          args: push ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}}
       
     
