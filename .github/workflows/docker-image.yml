@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: alpine
+    runs-on: alpine:latest
     steps:
     - uses: actions/checkout@v3
     - name: Build Docker image
@@ -24,7 +24,7 @@ jobs:
       run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
     
   publish:
-    runs-on: alpine
+    runs-on: alpine:latest
     steps:
       - name: Login to docker hub
         uses: actions-hub/docker/login@master
