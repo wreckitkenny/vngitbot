@@ -25,6 +25,7 @@ jobs:
         run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
 
   buildImage:
+    needs: getVersion
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.getVersion.outputs.version }}
@@ -36,6 +37,7 @@ jobs:
         run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
     
   publishImage:
+    needs: getVersion
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ needs.getVersion.outputs.VERSION }}
