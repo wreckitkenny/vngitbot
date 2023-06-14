@@ -32,9 +32,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
-        run: docker build -t ${GITHUB_REPOSITORY}:${VERSION} .
-      - name: Tag new Docker image
-        run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${GITHUB_REPOSITORY}:${VERSION}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
     
   publishImage:
     needs: getVersion
@@ -44,6 +48,8 @@ jobs:
     steps:
       - name: Login to docker hub
         uses: actions-hub/docker/login@master
+      - name: Tag new Docker image
+        run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
       - name: Push to Docker hub
         uses: actions-hub/docker@master
         with:
