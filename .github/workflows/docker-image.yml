@@ -15,16 +15,22 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: alpine
     steps:
     - uses: actions/checkout@v3
-    - name: Login to docker hub
-      uses: actions-hub/docker/login@master
     - name: Build Docker image
       run: docker build -t ${GITHUB_REPOSITORY}:${VERSION} .
     - name: Tag new Docker image
       run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
-    - name: Push to Docker hub
-      uses: actions-hub/docker@master
-      with:
-        args: push ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
+    
+  publish:
+    runs-on: alpine
+    steps:
+      - name: Login to docker hub
+        uses: actions-hub/docker/login@master
+      - name: Push to Docker hub
+        uses: actions-hub/docker@master
+        with:
+          args: push ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${VERSION}
+      
+    
