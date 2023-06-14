@@ -24,7 +24,7 @@ jobs:
     - name: Build Docker image
       run: docker build -t ${GITHUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}} .
     - name: Tag new Docker image
-      run: docker tag ${GITHUB_REPOSITORY}:${VERSION} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}}
+      run: docker tag ${GITHUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}} ${HUB_NAMESPACE}/${HUB_REPOSITORY}:${{steps.app-version.outputs.VERSION}}
     
   publish:
     runs-on: ubuntu-latest
