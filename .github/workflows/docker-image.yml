@@ -18,8 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Export VERSION to env
-#       run: export VERSION=`cat VERSION`
-      run: pwd; cat VERSION
+      run: export VERSION=$(cat VERSION)
     - name: Login to docker hub
       uses: actions-hub/docker/login@master
     - name: Build Docker image - ${VERSION}
