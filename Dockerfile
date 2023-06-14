@@ -5,9 +5,9 @@ WORKDIR /opt/vngitbot
 COPY . /opt/vngitbot
 ENV GITBOT_CONFIG_PATH=/opt/vngitbot/config/vngitbot.conf
 
-RUN mkdir -p /root/.config/pip
-RUN cp ./pip.conf /root/.config/pip
-RUN sed -i 's/http:\/\/deb.debian.org/https:\/\/artifact.vnpay.vn\/nexus\/repository\/apt-proxy_deb.debian.org/g' /etc/apt/sources.list
+# RUN mkdir -p /root/.config/pip
+# RUN cp ./pip.conf /root/.config/pip
+# RUN sed -i 's/http:\/\/deb.debian.org/https:\/\/artifact.vnpay.vn\/nexus\/repository\/apt-proxy_deb.debian.org/g' /etc/apt/sources.list
 RUN apt update -y
 RUN apt install openssh-server -y
 
