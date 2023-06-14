@@ -40,7 +40,7 @@ jobs:
     needs: getVersion
     runs-on: ubuntu-latest
     env:
-      VERSION: ${{ needs.getVersion.outputs.VERSION }}
+      VERSION: ${{ needs.getVersion.outputs.version }}
     steps:
       - name: Login to docker hub
         uses: actions-hub/docker/login@master
