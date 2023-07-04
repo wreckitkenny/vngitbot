@@ -1,5 +1,5 @@
 from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag, sanitize
-from telegram import Telegram
+from vngitbot.modules.telegram import Telegram
 import logging
 
 class ChangeTag:
@@ -42,5 +42,5 @@ class ChangeTag:
                     # Change Image tag for an updated repository
                     for location in valuePathList: changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, location, branchName, botname, repoName)
                     # Send an alert to Telegram channels
-                    # for namespace in namespaceList: Telegram().notifyTagChange(oldTag, newTag, env, repoName, namespace)
+                    Telegram().notifyTagChange(oldTag, newTag, env, repoName)
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))

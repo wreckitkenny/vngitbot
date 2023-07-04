@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from requests import *
-from utils import BasicConfig, __version__
-from handleRequest import Handle
+from modules.utils import BasicConfig, __version__
+from modules import Handle
 import logging
 
 
