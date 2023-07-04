@@ -92,7 +92,6 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branch
     cdProject.commits.create(data)
 
     # Create merge request
-    print(branchName)
     if branchName != "master":
         # owners = getApprovers(gl, cdProject, cdFolder)
         downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
