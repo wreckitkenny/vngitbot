@@ -1,5 +1,5 @@
 from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag, sanitize
-from vngitbot.modules.telegram import Telegram
+from .telegram import Telegram
 import logging
 
 class ChangeTag:
