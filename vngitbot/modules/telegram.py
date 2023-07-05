@@ -14,7 +14,7 @@ class Telegram:
         bot_message = """
 <b>VNGITBOT has changed version tag for deployment.</b>
 <b>Service</b>: <code>{}</code>
-<b>Cluster</b>: <code>{}-{}-workload</code>
+<b>Cluster</b>: <code>{}-{}</code>
 <b>Old tag</b>: <code>{}</code>  ==>  <b>New tag</b>: <code>{}</code>
 """.format(repoName.split("/")[-1], self.cluster, env, oldTag, newTag)
         send_text = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&parse_mode=HTML&text={}'.format(self.token, channel[env], bot_message)
