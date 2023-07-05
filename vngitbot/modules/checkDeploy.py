@@ -1,5 +1,5 @@
 from utils import BasicConfig, readCache, isDeployed, verifySuccess, removeCachedImage
-from utils import Telegram
+from .telegram import Telegram
 import logging, time
 import functools
 

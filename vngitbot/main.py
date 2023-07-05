@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from requests import *
-from modules.utils import BasicConfig, __version__
+from utils import BasicConfig
 from modules import Handle
 import logging
 
@@ -23,7 +23,7 @@ def run(server_class=HTTPServer, handler_class=Webhook, addr="localhost", port=8
     server_address = (addr, port)
     httpd = server_class(server_address, handler_class)
     logging.info("="*100)
-    logging.info("Vngitbot {} has started on {}:{}".format(__version__, addr, port))
+    logging.info("Vngitbot {} has started on {}:{}".format(utils.__version__, addr, port))
     httpd.serve_forever()
 
 

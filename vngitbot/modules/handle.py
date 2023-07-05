@@ -1,5 +1,5 @@
 from utils import BasicConfig
-from . import ChangeTag, CheckDeploy, Telegram
+from .changeImageTag import ChangeTag
 import json, logging
 
 class Handle:

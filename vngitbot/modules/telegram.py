@@ -1,4 +1,4 @@
-from utils import BasicConfig, enableProxy, disableProxy
+from utils import BasicConfig
 import requests, json
 
 class Telegram:
