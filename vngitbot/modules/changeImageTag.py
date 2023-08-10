@@ -1,4 +1,4 @@
-from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag, sanitize
+from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag
 from .telegram import Telegram
 import logging
 
