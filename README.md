@@ -6,48 +6,31 @@ VNGitbot is a Python bot supporting SRE to change Image version tag after develo
 
 #
 ```bash
-vngitbot/
+vngitbot
+├── CHANGELOG.md
 ├── config
-│   └── vngitbot.conf
+│   └── vngitbot.conf
 ├── Dockerfile
-├── docs
-│   └── CHANGELOG.md
+├── LICENSE
+├── pip.conf
 ├── README.md
 ├── requirements.txt
+├── VERSION
 └── vngitbot
-    ├── approve
-    │   ├── checkApproval.py
-    │   ├── __init__.py
-    │   └── revokeApproval.py
-    ├── changeTag
-    │   ├── changeImageTag.py
-    │   └── __init__.py
-    ├── handleRequest
-    │   ├── handle.py
-    │   └── __init__.py
-    ├── launch.py
-    ├── merge
-    │   ├── cacheManualMR.py
-    │   ├── __init__.py
-    │   └── makeMerge.py
-    ├── slack
-    │   ├── __init__.py
-    │   └── slack.py
-    ├── telegram
-    │   ├── __init__.py
-    │   └── telegram.py
-    ├── utils
-    │   ├── approve.py
-    │   ├── change.py
-    │   ├── config.py
-    │   ├── deployCheck.py
-    │   ├── __init__.py
-    │   ├── merge.py
-    │   ├── notify.py
-    │   └── version.py
-    └── verify
-        ├── checkDeploy.py
-        └── __init__.py
+    ├── main.py
+    ├── modules
+    │   ├── changeImageTag.py
+    │   ├── checkDeploy.py
+    │   ├── handle.py
+    │   ├── __init__.py
+    │   └── telegram.py
+    └── utils
+        ├── change.py
+        ├── config.py
+        ├── __init__.py
+        └── version.py
+
+4 directories, 18 files
 
 ```
 #

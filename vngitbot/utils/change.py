@@ -1,6 +1,5 @@
 import os, logging, re, gitlab
 from weakref import ref
-from .merge import downloadOwnerFile, cacheProject
 
 def checkEnvironment(gl, parser, pushedTag):
     env = cdProject = ''
@@ -10,7 +9,6 @@ def checkEnvironment(gl, parser, pushedTag):
     if pushedTag.split('-')[0] == 'd' and checkProjectID(gl, id_dev) == 1:
         env = 'dev'
         cdProject = gl.projects.get(id_dev)
-    # elif re.match('(v)?((\d\.){2}\d)', pushedTag.split('-')[0]) != None and checkProjectID(gl, id_staging) == 1:
     if pushedTag.split('-')[0] == 't' and checkProjectID(gl, id_staging) == 1:
         env = 'test'
         cdProject = gl.projects.get(id_staging)
@@ -41,7 +39,6 @@ def getOldTag(cdProject, valuePathList, repoName):
 
 
 def searchFile(cdProject, repoName):
-    # namespaceList = []
     valuePathList = []
     files = cdProject.repository_tree(recursive=True, all=True)
     for file in files:
@@ -49,53 +46,41 @@ def searchFile(cdProject, repoName):
             file_content = cdProject.files.raw(file_path=file['path'], ref='master')
             if repoName in str(file_content): valuePathList.append(file['path'])
     if len(valuePathList) > 1: valuePathList = checkDup(cdProject, repoName, valuePathList)
-    # Get namespace from searched files
-    # for valueFile in valuePathList:
-    #     if "dc-site" in valueFile or "dr-site" in valueFile:
-    #         helmfilePath = '/'.join(valueFile.split('/')[:-2])+'/helmfile.yaml'
-    #     else:
-    #         helmfilePath = '/'.join(valueFile.split('/')[:-1])+'/helmfile.yaml'
-    #     helmfileContent = cdProject.files.raw(file_path=helmfilePath, ref='master')
-    #     namespace = [re.search('(?<=namespace:)([a-z]+([-.])?)+',re.sub(r'[\n\t ]', '', x)).group(0) for x in helmfileContent.decode("utf-8").split("\n") if 'namespace:' in x]
-    #     if namespace[0] not in namespaceList: namespaceList.append(namespace[0])
-    # return(valuePathList, namespaceList)
     return(valuePathList)
 
 
-def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, location, branchName, botname, repoName):
-    # Check directory existing
-    cdFolder = '/'.join(location.split('/')[:-1])
-    if os.path.isdir(binPath+'/'+cdFolder) == False: os.makedirs(binPath+'/'+cdFolder)
+def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, valuePathList, branchName, botname, repoName):
+    for location in valuePathList:
+        # Check directory existing
+        cdFolder = '/'.join(location.split('/')[:-1])
+        if os.path.isdir(binPath+'/'+cdFolder) == False: os.makedirs(binPath+'/'+cdFolder)
 
-    # Download raw file
-    logging.info("Vngitbot is downloading CD file containing tag [{}].".format(oldTag))
-    with open(binPath+'/'+location, 'wb') as f:
-        cdProject.files.raw(file_path=location.strip(), ref='master', streamed=True, action=f.write)
+        # Download raw file
+        logging.info("Vngitbot is downloading CD file containing tag [{}].".format(oldTag))
+        with open(binPath+'/'+location, 'wb') as f:
+            cdProject.files.raw(file_path=location.strip(), ref='master', streamed=True, action=f.write)
 
-    # Change content
-    logging.info("Vngitbot is changing tag from old tag [{}] to new tag [{}].".format(oldTag, newTag))
-    changeContent(binPath+'/'+location, oldTag, newTag)
+        # Change content
+        logging.info("Vngitbot is changing tag from old tag [{}] to new tag [{}].".format(oldTag, newTag))
+        changeContent(binPath+'/'+location, oldTag, newTag)
 
-    # Commit change
-    data = {
-        'branch': branchName,
-        'commit_message': 'Change tag for {} from oldtag {} to newtag {}'.format(resource.split(':')[0], oldTag, newTag),
-        'actions': [
-            {
-                'action': 'update',
-                'file_path': location.strip(),
-                'content': open(binPath+'/'+location).read(),
-            }
-        ]
-    }
-    logging.info('Vngitbot is committing new change to branch [{}].'.format(branchName))
-    cdProject.commits.create(data)
+        # Commit change
+        data = {
+            'branch': branchName,
+            'commit_message': 'Change tag for {} from oldtag {} to newtag {}'.format(resource.split(':')[0], oldTag, newTag),
+            'actions': [
+                {
+                    'action': 'update',
+                    'file_path': location.strip(),
+                    'content': open(binPath+'/'+location).read(),
+                }
+            ]
+        }
+        logging.info('Vngitbot is committing new change to branch [{}].'.format(branchName))
+        cdProject.commits.create(data)
 
     # Create merge request
     if branchName != "master":
-        # owners = getApprovers(gl, cdProject, cdFolder)
-        downloadOwnerFile(binPath, cdFolder, cdProject, branchName)
-        # cacheProject(binPath, cdProject, branchName)      ## Temporarily disabled for /merge API
         botId = [gl.users.list(username=botname)[0].id]
         logging.info('Gitbot is creating a merge request for new branch [{}]'.format(branchName))
         mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':botId})
@@ -131,25 +116,4 @@ def cacheImage (binPath, imageName, mode):
         data = f.read(100)
         if len(data) > 0 :
             f.write("\n")
-        # f.write(imageName+',0,0')
         f.write(imageName)
-
-# def cacheOwner(binPath, owners, branchName):
-#     if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
-#     with open(binPath+'/.cache/'+branchName, 'w') as f:
-#         for o in owners: f.write(str(o) + '\n')
-
-
-# def getApprovers(gl, cdProject, cdFolder):
-#     try:
-#         owners = cdProject.files.raw(file_path=cdFolder+"/OWNERS", ref='master')
-#         try:
-#             assignees = [o for o in owners.decode().strip().split('\n')]
-#             assignee_id = [gl.users.list(username=assignee)[0].id for assignee in assignees]
-#             return assignee_id
-#         except IndexError:
-#             logging.error("OWNERS file is empty")
-#             return []
-#     except gitlab.exceptions.GitlabGetError:
-#         logging.error("OWNERS file is not found.")
-#         return []

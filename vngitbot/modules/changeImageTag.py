@@ -40,7 +40,7 @@ class ChangeTag:
                 if (lambda x,y: (x>y)-(x<y))(oldTag,newTag) == 0: logging.info("==> No tag changed!!!")
                 else:
                     # Change Image tag for an updated repository
-                    for location in valuePathList: changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, location, branchName, botname, repoName)
+                    changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, valuePathList, branchName, botname, repoName)
                     # Send an alert to Telegram channels
                     Telegram().notifyTagChange(oldTag, newTag, env, repoName)
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))

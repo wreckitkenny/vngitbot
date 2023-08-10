@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.9] | 2023-08-10
+### Added/Removed
+### Changed
+### Fixed
+- Fixed the error creating merge requests existing gets hung
+
+## [1.1.8] | 2023-07-05
+### Added/Removed
+- Removed deprecated functions
+### Changed
+- Changed file directory
+- Renamed logic files
+### Fixed
+
 ## [1.1.7] | 2023-04-01
 ### Added/Removed
 - Added new search_file logic to support changing multiple files
