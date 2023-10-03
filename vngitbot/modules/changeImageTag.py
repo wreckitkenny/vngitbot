@@ -1,4 +1,4 @@
-from utils import BasicConfig, checkEnvironment, searchFile, getOldTag, changeTag
+from utils import BasicConfig, checkEnvironment, locateBlob, getOldTag, changeTag
 from .telegram import Telegram
 import logging
 
@@ -23,8 +23,9 @@ class ChangeTag:
 
         if env != '':
             # valuePathList, namespaceList = searchFile(cdProject, repoName)
-            valuePathList = searchFile(cdProject, repoName)
-            oldTag = getOldTag(cdProject, valuePathList, repoName)
+            # valuePathList = searchFile(cdProject, repoName)
+            blobList = locateBlob(cdProject, repoName)
+            oldTag = getOldTag(cdProject, blobList, repoName)
             branch_list = [branch.name for branch in cdProject.branches.list(all=True)]
 
             if env == 'prod':
@@ -40,7 +41,7 @@ class ChangeTag:
                 if (lambda x,y: (x>y)-(x<y))(oldTag,newTag) == 0: logging.info("==> No tag changed!!!")
                 else:
                     # Change Image tag for an updated repository
-                    changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, valuePathList, branchName, botname, repoName)
+                    changeTag(self.gl, resource, cdProject, oldTag, newTag, self.binPath, blobList, branchName, botname, repoName)
                     # Send an alert to Telegram channels
                     Telegram().notifyTagChange(oldTag, newTag, env, repoName)
         else: logging.error("==> The image [{}] is rejected to deploy.".format(resource))

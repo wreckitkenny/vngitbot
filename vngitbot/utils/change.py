@@ -38,31 +38,38 @@ def getOldTag(cdProject, valuePathList, repoName):
     return tagList[0]
 
 
-def searchFile(cdProject, repoName):
-    valuePathList = []
-    files = cdProject.repository_tree(recursive=True, all=True)
-    for file in files:
-        if file['type'] == 'blob':
-            file_content = cdProject.files.raw(file_path=file['path'], ref='master')
-            if repoName in str(file_content): valuePathList.append(file['path'])
-    if len(valuePathList) > 1: valuePathList = checkDup(cdProject, repoName, valuePathList)
-    return(valuePathList)
+# def searchFile(cdProject, repoName):
+#     valuePathList = []
+#     files = cdProject.repository_tree(recursive=True, all=True)
+#     for file in files:
+#         if file['type'] == 'blob':
+#             file_content = cdProject.files.raw(file_path=file['path'], ref='master')
+#             if repoName in str(file_content): valuePathList.append(file['path'])
+#     if len(valuePathList) > 1: valuePathList = checkDup(cdProject, repoName, valuePathList)
+#     return(valuePathList)
+
+def locateBlob(cdProject, repoName):
+    listOfBlobName = []
+    blobList = cdProject.search(gitlab.const.SearchScope.BLOBS, repoName)
+    for blob in blobList:
+        listOfBlobName.append(blob["filename"])
+    return listOfBlobName
 
 
-def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, valuePathList, branchName, botname, repoName):
-    for location in valuePathList:
+def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, blobList, branchName, botname, repoName):
+    for blob in blobList:
         # Check directory existing
-        cdFolder = '/'.join(location.split('/')[:-1])
+        cdFolder = '/'.join(blob.split('/')[:-1])
         if os.path.isdir(binPath+'/'+cdFolder) == False: os.makedirs(binPath+'/'+cdFolder)
 
         # Download raw file
         logging.info("Vngitbot is downloading CD file containing tag [{}].".format(oldTag))
-        with open(binPath+'/'+location, 'wb') as f:
-            cdProject.files.raw(file_path=location.strip(), ref='master', streamed=True, action=f.write)
+        with open(binPath+'/'+blob, 'wb') as f:
+            cdProject.files.raw(file_path=blob.strip(), ref='master', streamed=True, action=f.write)
 
         # Change content
         logging.info("Vngitbot is changing tag from old tag [{}] to new tag [{}].".format(oldTag, newTag))
-        changeContent(binPath+'/'+location, oldTag, newTag)
+        changeContent(binPath+'/'+blob, oldTag, newTag)
 
         # Commit change
         data = {
@@ -71,8 +78,8 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, valuePathList, b
             'actions': [
                 {
                     'action': 'update',
-                    'file_path': location.strip(),
-                    'content': open(binPath+'/'+location).read(),
+                    'file_path': blob.strip(),
+                    'content': open(binPath+'/'+blob).read(),
                 }
             ]
         }

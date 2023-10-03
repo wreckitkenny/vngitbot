@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.10] | 2023-10-03
+### Added/Removed
+### Changed
+- Optimizing blob locating by using 'search' API instead of 'tree' API
+### Fixed
+
 ## [1.1.9] | 2023-08-10
 ### Added/Removed
 ### Changed
