@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.11] | 2023-10-05
+### Added/Removed
+- Added duplicate validation for new blob locating optimization
+### Changed
+### Fixed
+
 ## [1.1.10] | 2023-10-03
 ### Added/Removed
 ### Changed
