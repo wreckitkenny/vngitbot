@@ -51,8 +51,8 @@ def getOldTag(cdProject, valuePathList, repoName):
 def locateBlob(cdProject, repoName):
     listOfBlobName = []
     blobList = cdProject.search(gitlab.const.SearchScope.BLOBS, repoName)
-    for blob in blobList:
-        listOfBlobName.append(blob["filename"])
+    for blob in blobList: listOfBlobName.append(blob["filename"])
+    if len(listOfBlobName) > 1: listOfBlobName = checkDup(cdProject,repoName,listOfBlobName)
     return listOfBlobName
 
 
@@ -93,14 +93,14 @@ def changeTag(gl, resource, cdProject, oldTag, newTag, binPath, blobList, branch
         mr = cdProject.mergerequests.create({'source_branch':branchName, 'target_branch':'master', 'title':'Vnpaybot has released {}'.format(resource), 'assignee_ids':botId})
         mr.approval_rules.create({"name": "Production MR Policy", "approvals_required": 2, "rule_type": "regular","user_ids": botId})
 
-    # Cache image for deployment
-    cacheImage(binPath, resource, mode='a+')
+    # # Cache image for deployment
+    # cacheImage(binPath, resource, mode='a+')
 
     # Complete
     logging.info('Vngitbot has finished changing old tag [{}] to new tag [{}].'.format(oldTag, newTag))
 
 
-def  changeContent(file, old, new):
+def changeContent(file, old, new):
     with open(file, 'r') as f:
         content = f.read()
         content = content.replace(old, new)
@@ -116,11 +116,11 @@ def checkProjectID(gl, id):
         return 0
     return 1
 
-def cacheImage (binPath, imageName, mode):
-    if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
-    with open(binPath+'/.cache/imageNotDeployed', mode) as f:
-        f.seek(0)
-        data = f.read(100)
-        if len(data) > 0 :
-            f.write("\n")
-        f.write(imageName)
+# def cacheImage (binPath, imageName, mode):
+#     if os.path.isdir(binPath+'/.cache') == False: os.makedirs(binPath+'/.cache')
+#     with open(binPath+'/.cache/imageNotDeployed', mode) as f:
+#         f.seek(0)
+#         data = f.read(100)
+#         if len(data) > 0 :
+#             f.write("\n")
+#         f.write(imageName)
