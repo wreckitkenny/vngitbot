@@ -1,5 +1,4 @@
 import os, logging, re, gitlab
-from weakref import ref
 
 def checkEnvironment(gl, parser, pushedTag):
     env = cdProject = ''
